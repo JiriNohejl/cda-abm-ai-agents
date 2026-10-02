@@ -9,6 +9,8 @@
 > **Does cognitive trader intelligence matter in market microstructure, or does the market institution do all the heavy lifting?**  
 > An experimental agent-based computational economics (ACE) testbed comparing canonical **Zero-Intelligence with Constraint (ZI-C)** traders ([Gode & Sunder, 1993](https://doi.org/10.1086/261867)) against **Cognitive LLM Agents** powered by [TypeSafe AI's Jev model](https://typesafe.ai).
 
+<img width="2798" height="1286" alt="image" src="https://github.com/user-attachments/assets/4c639823-c1c5-4680-a7c6-9d3175cf0dc0" />
+
 ---
 
 ## ⚡ Key Empirical Finding
@@ -23,6 +25,8 @@ Across paired Monte Carlo market simulations under identical Poisson arrival dis
 | **Late Phase Convergence (RMSE)** | 11.40 | **7.27** | **-4.13** | **$p < 0.001$** | **$d = -1.67$** | 🏆 **Jev AI forms a tighter terminal corridor** |
 
 **Takeaway:** The continuous double auction institution alone achieves ~97% allocative efficiency regardless of trader rationality. However, **cognitive AI agents dramatically stabilize price discovery**, eliminating chaotic drift and forming tight equilibrium pricing corridors.
+
+<img width="2130" height="1048" alt="image" src="https://github.com/user-attachments/assets/026980e5-8da1-4f78-9be6-c191cfa859ea" />
 
 ---
 
