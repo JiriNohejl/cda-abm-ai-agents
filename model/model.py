@@ -1,3 +1,4 @@
+import heapq
 import mesa
 
 from .agents import Buyer, Seller
@@ -19,6 +20,12 @@ class DoubleAuctionModel(mesa.Model):
     ):
         """Create traders, the order book, and the model data collector."""
         super().__init__(rng=rng)
+
+        if not hasattr(self, "time"):
+            self.time = 0.0
+        if not hasattr(mesa.Model, "schedule_event"):
+            self._event_queue = []
+            self._event_counter = 0
 
         self.max_valuation = max_valuation
         self.mean_interarrival = mean_interarrival
@@ -61,6 +68,29 @@ class DoubleAuctionModel(mesa.Model):
                 "DoneTrading": lambda a: a.done_trading,
             },
         )
+
+    def schedule_event(self, function, *, at: float | None = None, after: float | None = None, **kwargs):
+        """Schedule a one-off event (native Mesa 3.5+ or fallback event queue)."""
+        if hasattr(mesa.Model, "schedule_event"):
+            return super().schedule_event(function, at=at, after=after, **kwargs)
+        if (at is None) == (after is None):
+            raise ValueError("Specify exactly one of 'at' or 'after'")
+        t = at if at is not None else self.time + after
+        self._event_counter += 1
+        heapq.heappush(self._event_queue, (t, self._event_counter, function))
+
+    def run_for(self, duration: float | int) -> None:
+        """Advance simulation time by duration and execute scheduled events."""
+        if hasattr(mesa.Model, "run_for"):
+            return super().run_for(duration)
+        end_time = self.time + duration
+        while self._event_queue and self._event_queue[0][0] <= end_time:
+            t, _, func = heapq.heappop(self._event_queue)
+            self.time = t
+            func()
+            if self.is_equilibrium_reached:
+                break
+        self.time = end_time
 
     @property
     def is_equilibrium_reached(self) -> bool:
