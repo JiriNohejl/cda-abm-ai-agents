@@ -1,0 +1,10 @@
+mesa>=3.5.0
+networkx
+pandas
+numpy
+scipy
+matplotlib
+pytest
+typesafe-sdk
+python-pptx
+
