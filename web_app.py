@@ -240,14 +240,14 @@ HTML_CONTENT = """<!DOCTYPE html>
           <span id="consoleTitleText">TypeSafe Jev System One • Market Cognitive Overview</span>
           <span id="jevModeBadge" class="badge" style="background: rgba(6, 182, 212, 0.2); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.4);">Jev Active</span>
         </div>
-        <div id="consoleSubtitle" style="font-size: 0.72rem; color: #94a3b8;">Autonomous agent cognitive reasoning, 5-level Score prompts, and order book delta caching</div>
+        <div id="consoleSubtitle" style="font-size: 0.72rem; color: #94a3b8;">Autonomous agent cognitive reasoning, stochastic Choice primitives, and order book delta caching</div>
       </div>
     </div>
 
     <!-- Quick Telemetry Chips & Collapsible Inspector Toggle -->
     <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
       <div class="stat-pill" style="background: #1e293b; padding: 4px 10px; border-radius: 6px; font-size: 0.72rem; border: 1px solid #334155;">
-        <span id="chipLabel1" style="color: #94a3b8;">Avg Jev Score:</span> <b id="chipAvgScore" style="color: #38bdf8;">—</b>
+        <span id="chipLabel1" style="color: #94a3b8;">Primitive:</span> <b id="chipAvgScore" style="color: #38bdf8;">—</b>
       </div>
       <div class="stat-pill" style="background: #1e293b; padding: 4px 10px; border-radius: 6px; font-size: 0.72rem; border: 1px solid #334155;">
         <span id="chipLabel2" style="color: #94a3b8;">Cache Hit Ratio:</span> <b id="chipCacheRatio" style="color: #34d399;">—</b>
@@ -268,7 +268,7 @@ HTML_CONTENT = """<!DOCTYPE html>
     <!-- 2. Spectrum / Tactic Distribution Bar (100% full width) -->
     <div style="margin-bottom: 14px; background: #0b0f19; border-radius: 6px; padding: 10px 14px; border: 1px solid #1e293b; width: 100%; box-sizing: border-box;">
       <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: #94a3b8; margin-bottom: 6px; font-weight: 600;">
-        <span id="spectrumBarTitle">COGNITIVE TACTIC SPECTRUM (5-LEVEL JEV AGGRESSIVENESS)</span>
+        <span id="spectrumBarTitle">COGNITIVE TACTIC SPECTRUM (4 STOCHASTIC ARCHETYPES)</span>
         <span id="spectrumTotalsText">0 Total Recorded Decisions</span>
       </div>
       <div style="height: 12px; width: 100%; border-radius: 6px; background: #1e293b; display: flex; overflow: hidden; box-sizing: border-box;" id="spectrumBar">
@@ -1009,19 +1009,19 @@ function renderJevDecisions(data) {
   if (isJev) {
     if (icon) icon.innerText = '🧠';
     if (titleText) titleText.innerText = 'TypeSafe Jev System One • Market Cognitive Overview';
-    if (subtitle) subtitle.innerText = 'Autonomous agent cognitive reasoning, 5-level Score prompts, and order book delta caching';
+    if (subtitle) subtitle.innerText = 'Autonomous agent cognitive reasoning, stochastic Choice primitives, and order book delta caching';
     if (badge) {
       badge.innerText = isLive ? '⚡ Live TypeSafe API' : '🧠 Jev System One (Active)';
       badge.style.background = isLive ? 'rgba(16, 185, 129, 0.2)' : 'rgba(6, 182, 212, 0.2)';
       badge.style.color = isLive ? '#34d399' : '#22d3ee';
       badge.style.borderColor = isLive ? 'rgba(16, 185, 129, 0.4)' : 'rgba(6, 182, 212, 0.4)';
     }
-    if (chipLabel1) chipLabel1.innerText = 'Avg Jev Score:';
+    if (chipLabel1) chipLabel1.innerText = 'Primitive:';
     if (chipLabel2) chipLabel2.innerText = 'Cache Hit Ratio:';
     if (chipAvg) {
       if (decisions.length > 0) {
         const avgScore = (decisions.reduce((acc, d) => acc + (d.score || 0), 0) / decisions.length).toFixed(2);
-        chipAvg.innerText = `${avgScore} / 4.0`;
+        chipAvg.innerText = "Stochastic Choice";
       } else {
         chipAvg.innerText = '—';
       }
@@ -1032,7 +1032,7 @@ function renderJevDecisions(data) {
       const cachePct = totalDecs > 0 ? ((savedDecs / totalDecs) * 100).toFixed(0) + '%' : '0%';
       chipCache.innerText = cachePct;
     }
-    if (specTitle) specTitle.innerText = 'COGNITIVE TACTIC SPECTRUM (5-LEVEL JEV AGGRESSIVENESS)';
+    if (specTitle) specTitle.innerText = 'COGNITIVE TACTIC SPECTRUM (4 STOCHASTIC ARCHETYPES)';
     if (specTotals) specTotals.innerText = `${decisions.length} Logged Decisions (${ts.total_ai_calls || 0} Total AI Calls)`;
     if (streamTitle) streamTitle.innerText = 'Live Jev Decision Stream';
     if (streamSub) streamSub.innerText = '(Continuous arrival events & order book interactions)';
@@ -1168,7 +1168,7 @@ function renderJevDecisions(data) {
                 <b style="color: ${scoreColor};">${d.tactic}</b> ➔ ${isBuyer ? 'Bid' : 'Ask'} <b>$${d.submitted_price.toFixed(2)}</b>
               </div>
               <div style="display: flex; align-items: center; gap: 4px; font-size: 0.7rem; color: #94a3b8; flex-shrink: 0;">
-                <span>${isJev ? 'Score:' : 'Draw:'}</span>
+                
                 <div style="width: 38px; height: 6px; background: #334155; border-radius: 3px; overflow: hidden; display: inline-block;">
                   <div style="width: ${scorePct}%; height: 100%; background: ${scoreColor};"></div>
                 </div>
@@ -1298,8 +1298,8 @@ function renderAgentInspectorDetails(data) {
             </span>
           </div>
           <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-            <span style="color: #94a3b8; font-size: 0.68rem; text-transform: uppercase;">Cognitive Choice:</span>
-            <span style="color: #38bdf8; font-size: 0.72rem; font-weight: 600;">Score: <b style="color: ${scoreColor};">${(lastDec.score || 0).toFixed(2)} / 4.0</b></span>
+            <span style="color: #94a3b8; font-size: 0.68rem; text-transform: uppercase;">Cognitive Decision:</span>
+            <span style="color: #38bdf8; font-size: 0.72rem; font-weight: 600;">Stochastic <b style="color: #22d3ee;">Choice()</b></span>
           </div>
           <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
             <div style="flex: 1; height: 6px; background: #1e293b; border-radius: 3px; overflow: hidden;">
@@ -1323,7 +1323,7 @@ function renderAgentInspectorDetails(data) {
               TypeSafe System One Specification
             </div>
             <div style="color: #38bdf8; font-family: monospace; font-size: 0.68rem; margin-bottom: 4px;">
-              Score(instructions="How aggressively should this trader quote...")
+              Choice(options=["spread_crosser", "queue_competitor", "patient_maker", "deep_discount"])
             </div>
             <div style="color: #94a3b8; font-size: 0.68rem; line-height: 1.35;">
               <div>• <b>State:</b> {val: $${valCost.toFixed(2)}, bid: ${lastDec.best_bid !== null ? '$' + lastDec.best_bid.toFixed(2) : 'null'}, ask: ${lastDec.best_ask !== null ? '$' + lastDec.best_ask.toFixed(2) : 'null'}}</div>
